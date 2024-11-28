@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensagens Recebidas</title>
+    <link rel="stylesheet" href="css/mensagem.css" />
+    <link rel="stylesheet" href="css/default.css" />
+</head>
+<body>
+    <div class="page">
+        <header>
+            <h1>Mensagens Recebidas</h1>
+        </header>
+        <main>
+            <div id="messages-container">
+                <table id="messages-table" border="1">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Mensagem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- As mensagens serão inseridas aqui dinamicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <footer>
+            <p>© 2024 por Luxo aluguel de iates</p>
+        </footer>
+    </div>
+    <script src="js/jquery-3.6.4.min.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        // Chama a função ao carregar a página
+    document.addEventListener('DOMContentLoaded', carregarMensagens);
+    
+    document.getElementById('contact-form').addEventListener('submit', function (event) {
+        event.preventDefault(); // Impede o recarregamento da página
+    
+        const nome = document.getElementById('nome').value;
+        const email = document.getElementById('email').value;
+        const mensagem = document.getElementById('msg').value;
+    
+        // Objeto de mensagem a ser enviado para a API
+        const mensagemObj = { nome, email, mensagem };
+    
+        inserirMensagem(mensagemObj); // Chama a função para enviar a mensagem
+    
+        alert('Mensagem enviada com sucesso!');
+        this.reset(); // Limpa o formulário após o envio
+    });
+    
+      </script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+/* font */
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+/* var */
+
+:root {
+    --background: #EBEBEB;
+    --darkblue: #21272b;
+    --box: #21272bc9;
+    --lightblue: #1bb4e8;
+    --ocher: #c6b07f;
+    --footer: #CBCFD3;
+    --pagefont: 'Open Sans', sans-serif;
+}
+
+/* all */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--background);
+    font-family: var(--pagefont);
+}
+
+.page {
+    margin: 0 auto;
+    width: 980px;
+}
+
+/* header */
+
+header {
+    background-color: var(--darkblue);
+    height: 93px;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 5px;
+    position: fixed;
+    width: 1013px;
+    z-index: 1;
+}
+
+.accent {
+    color: var(--lightblue) !important;
+}
+
+#title {
+    display: flex;
+    align-items: end;
+    color: white;
+    margin: 0 0 10px 20px;
+}
+
+#title img {
+    margin: 0 13px 8px 5px;
+}
+
+#title h1 {
+    color: var(--lightblue);
+}
+
+#title h1,
+#title h2 {
+    font: italic 400 1.46em var(--pagefont);
+    line-height: 29px;
+}
+
+#title h2 {
+    padding-bottom: 2px;
+}
+
+.headtitle {
+    flex-direction: column;
+}
+
+/* menu */
+
+.navmenu {
+    margin-top: 62px;
+    display: flex;
+    list-style: none;
+}
+
+.navmenu li {
+    padding: 0 27px;
+    font-size: 0.8em;
+    font-weight: 300;
+    border-left: 0.5px solid white;
+}
+
+.navmenu li:first-of-type {
+    border: 0px;
+}
+
+.navmenu a {
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: 0.5s;
+}
+
+.navmenu a:hover {
+    color: var(--lightblue);
+}
+
+/* Tela Login */
+
+.bglogin {
+    background-size: cover;
+    padding-top: 269px;
+    filter: brightness(0.25) opacity(0.75);
+}
+
+.paglogin h2 {
+    text-align: center;
+    font: italic 700 2em var(--pagefont);
+    color: #21272b;
+    position: relative;
+    bottom: 120px;
+}
+
+form {
+    padding: 0 10px 20px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+form div {
+    padding: 7px;
+}
+
+form label {
+    font: normal 700 0.8em var(--pagefont);
+    color: var(--ocher);
+    cursor: text;
+    text-transform: uppercase;
+}
+
+#nome,
+#senha {
+    width: 100%;
+    padding: 5px;
+    outline: 0;
+    border: 0;
+    border-bottom: 1px solid;
+    font-family: var(--pagefont);
+}
+
+textarea {
+    width: 100%;
+    resize: none;
+    margin-top: 3px;
+    padding: 5px;
+    outline: 0;
+    border: 0;
+    border-bottom: 1px solid;
+    font-family: var(--pagefont);
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.button {
+    padding: 10px 20px;
+    border: none;
+    font: normal 600 0.7em var(--pagefont);
+    background-color: var(--darkblue);
+    color: white;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.button:hover {
+    background-color: var(--box);
+    cursor: pointer;
+}
+
+/* footer */
+
+footer {
+    font-size: 0.75em;
+    background-color: var(--footer);
+}
+
+footer p {
+    width: 980px;
+    padding: 25px 0;
+    background-color: var(--background);
+    margin: 0 auto;
+    text-indent: 15px;
+}

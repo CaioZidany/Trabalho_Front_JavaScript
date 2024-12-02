@@ -1,85 +1,90 @@
+// Função para obter mensagens da API
 function obterMensagens() {
-
-    var retorno = [];
-
-    var consulta = $.ajax({
+    return $.ajax({
         url: 'https://app-p2-aab7c7fdddb8.herokuapp.com/mensagens',
         method: 'GET',
         dataType: 'json',
-        async: false
-    }).fail(function () {
-        return retorno;
+        contentType: 'application/json',
+    }).fail(function (jqXHR) {
+        console.error('Erro ao obter mensagens da API:', jqXHR.responseText || jqXHR.statusText);
+        alert('Erro ao carregar mensagens. Tente novamente mais tarde.');
     });
-
-    consulta.done(function (data) {
-        retorno = data;
-    });
-
-    return retorno;
 }
 
+// Função para enviar uma nova mensagem para a API
 function inserirMensagem(mensagem) {
-
-
-
-   /* var mensagem = {
-        nome: "nome da pessoa",
-        email: "email informado",
-        mensagem: "a mensagem informada"
-    } */
-
-
-
     $.ajax({
-
         url: 'https://app-p2-aab7c7fdddb8.herokuapp.com/mensagens',
         method: 'POST',
         data: JSON.stringify(mensagem),
         dataType: 'json',
         contentType: 'application/json',
         success: function () {
-            console.log('Mensagem enviada com sucesso:', mensagem);
+            alert('Mensagem enviada com sucesso!');
+            carregarMensagens(); // Recarrega as mensagens na tabela
         },
-        error: function (erro) {
-            console.error('Erro ao enviar mensagem:', erro);
+        error: function (jqXHR) {
+            console.error('Erro ao enviar mensagem:', jqXHR.responseText || jqXHR.statusText);
+            alert('Erro ao enviar a mensagem. Verifique os dados e tente novamente.');
         }
     });
 }
 
+// Função para carregar as mensagens na tabela
 function carregarMensagens() {
-    const mensagens = obterMensagens(); // Obtém mensagens da API
+    obterMensagens().then(function (mensagens) {
+        const tbody = document.querySelector('#messages-table tbody');
+        tbody.innerHTML = ''; // Limpa a tabela antes de preenchê-la
 
-    const tbody = document.querySelector('#messages-table tbody');
-    tbody.innerHTML = ''; // Limpa a tabela antes de preencher
+        if (mensagens && mensagens.length > 0) {
+            mensagens.forEach((mensagem) => {
+                const linha = document.createElement('tr');
 
-    if (mensagens && mensagens.length > 0) {
-        mensagens.forEach((mensagem) => {
+                const colunaNome = document.createElement('td');
+                colunaNome.textContent = mensagem.nome || 'Não informado';
+
+                const colunaEmail = document.createElement('td');
+                colunaEmail.textContent = mensagem.email || 'Não informado';
+
+                const colunaMensagem = document.createElement('td');
+                colunaMensagem.textContent = mensagem.mensagem || 'Não informado';
+
+                linha.appendChild(colunaNome);
+                linha.appendChild(colunaEmail);
+                linha.appendChild(colunaMensagem);
+
+                tbody.appendChild(linha);
+            });
+        } else {
             const linha = document.createElement('tr');
-
-            const colunaNome = document.createElement('td');
-            colunaNome.textContent = mensagem.nome || 'Não informado';
-
-            const colunaEmail = document.createElement('td');
-            colunaEmail.textContent = mensagem.email || 'Não informado';
-
-            const colunaMensagem = document.createElement('td');
-            colunaMensagem.textContent = mensagem.mensagem || 'Não informado';
-
-            linha.appendChild(colunaNome);
-            linha.appendChild(colunaEmail);
-            linha.appendChild(colunaMensagem);
-
+            const coluna = document.createElement('td');
+            coluna.setAttribute('colspan', '3');
+            coluna.textContent = 'Nenhuma mensagem encontrada.';
+            linha.appendChild(coluna);
             tbody.appendChild(linha);
-        });
-    } else {
-        const linha = document.createElement('tr');
-        const coluna = document.createElement('td');
-        coluna.setAttribute('colspan', '3');
-        coluna.textContent = 'Nenhuma mensagem encontrada.';
-        linha.appendChild(coluna);
-        tbody.appendChild(linha);
-    }
+        }
+    });
 }
+
+// Captura o envio do formulário de contato e envia a mensagem para a API
+document.getElementById('contact-form').addEventListener('submit', function (event) {
+    event.preventDefault(); // Evita o recarregamento da página
+
+    const nome = document.getElementById('nome').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const mensagem = document.getElementById('msg').value.trim();
+
+    if (nome && email && mensagem) {
+        // Monta o objeto esperado pela API
+        const novaMensagem = { nome, email, mensagem };
+        inserirMensagem(novaMensagem); // Chama a função para enviar a mensagem
+    } else {
+        alert('Preencha todos os campos antes de enviar.');
+    }
+});
+
+// Carrega as mensagens quando a página de administração estiver pronta
+document.addEventListener('DOMContentLoaded', carregarMensagens);
 
 function validarUsuario(objLoginSenha) {
     let retorno = false;
